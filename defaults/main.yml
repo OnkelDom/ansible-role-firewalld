@@ -1,0 +1,108 @@
+---
+proxy_env: {}
+# Defines any custom zones to create/delete
+# zone - name of zone
+#
+# present - whether custom zone is created/deleted
+## present: true
+### creates zone if not already present
+## present: false
+### deletes zone if present
+firewalld_custom_zones: []
+  # - zone: 'docker'
+  #   state: 'enabled'
+  #   present: false
+  # - zone: 'privateDNS'
+  #   state: 'enabled'
+  #   present: true
+
+# Defines firewall rules
+firewalld_rules:
+  - service: 'ssh'
+    state: 'enabled'
+    permanent: true
+  - service: 'http'
+    state: 'enabled'
+    permanent: true
+  - service: 'https'
+    state: 'enabled'
+    permanent: true
+  # # - service: 'dhcp'
+  # #   permanent: true
+  # #   zone: 'public'
+  #   zone: 'public'
+  # - service: 'https'
+  #   state: 'enabled'
+  #   permanent: true
+  #   zone: 'public'
+
+  #   zone: 'public'
+
+# Defines firewall zones (default zones - not custom zones)
+firewalld_zones: []
+  # - zone: 'home'
+  #   permanent: true
+  #   state: 'enabled'
+  #   interface: 'enp0s3'
+  # - zone: 'public'
+  #   permanent: true
+  #   state: 'enabled'
+  #   interface: 'enp0s8'
+
+# Define firewall services
+firewalld_services:
+  - service: plexmediaserver
+    description: "Ports required by plexmediaserver"
+    ports:
+      - port: 32400
+        protocol: tcp
+      - port: 32400
+        protocol: udp
+      - port: 1900
+        protocol: udp
+      - port: 3005
+        protocol: tcp
+      - port: 5353
+        protocol: udp
+      - port: 8324
+        protocol: tcp
+      - port: 32410
+        protocol: udp
+      - port: 32412
+        protocol: udp
+      - port: 32413
+        protocol: udp
+      - port: 32414
+        protocol: udp
+      - port: 32469
+        protocol: tcp
+  - service: consul_client
+    description: "Ports required by consul_client"
+    ports:
+      - port: 8301
+        protocol: tcp
+      - port: 8301
+        protocol: udp
+      - port: 8302
+        protocol: tcp
+      - port: 8302
+        protocol: udp
+  - service: consul_server
+    description: "Ports required by consul_server"
+    ports:
+      - port: 8300
+        protocol: tcp
+      - port: 8600
+        protocol: udp
+      - port: 8600
+        protocol: tcp
+  - service: consul_http
+    description: "Ports required by consul_http"
+    ports:
+      - port: 8500
+        protocol: tcp
+  - service: consul_https
+    description: "Ports required by consul_https"
+    ports:
+      - port: 8501
+        protocol: tcp
